@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SendyTV • Modern Dashboard & Login</title>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Font Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <!-- HLS.js (tetap disertakan) -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(ellipse at top, #0b1427, #030613);
+      min-height: 100vh;
+      color: #f0f4ff;
+      line-height: 1.5;
+      position: relative;
+    }
+
+    /* animated background grain */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.4;
+      pointer-events: none;
+      background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJmIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc0IiBudW1PY3RhdmVzPSIzIiAvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNmKSIgb3BhY2l0eT0iMC4xIiAvPjwvc3ZnPg==');
+    }
+
+    .app-wrapper {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* premium glassmorphism */
+    .glass-morph {
+      background: rgba(10, 20, 40, 0.5);
+      backdrop-filter: blur(12px) saturate(180%);
+      -webkit-backdrop-filter: blur(12px) saturate(180%);
+      border: 1px solid rgba(72, 140, 255, 0.15);
+      border-radius: 48px;
+      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(72, 140, 255, 0.2) inset;
+    }
+
+    /* login card */
+    .auth-card {
+      max-width: 480px;
+      margin: 30px auto;
+      padding: 40px 36px;
+      transition: transform 0.3s ease;
+    }
+
+    .auth-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .auth-header .logo {
+      font-size: 2.8rem;
+      font-weight: 700;
+      background: linear-gradient(to right, #a6c9ff, #5fa4ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+
+    .auth-header p {
+      color: #8da4cc;
+      font-size: 0.95rem;
+    }
+
+    .auth-tabs-modern {
+      display: flex;
+      gap: 8px;
+      background: rgba(0, 10, 25, 0.5);
+      border-radius: 60px;
+      padding: 6px;
+      border: 1px solid #263b60;
+      margin-bottom: 36px;
+    }
+
+    .auth-tab-modern {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #a7bee7;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 12px 10px;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .auth-tab-modern.active {
+      background: #2563eb;
+      color: white;
+      box-shadow: 0 8px 20px -6px #1e4bb3;
+    }
+
+    .input-group-modern {
+      margin-bottom: 24px;
+    }
+
+    .input-group-modern label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #9fb0da;
+      margin-bottom: 8px;
+    }
+
+    .input-icon-wrapper {
+      display: flex;
+      align-items: center;
+      background: rgba(5, 15, 30, 0.7);
+      border: 1px solid #2a3d68;
+      border-radius: 36px;
+      padding: 4px 20px;
+      transition: all 0.2s;
+    }
+
+    .input-icon-wrapper:focus-within {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+      background: #0a1730;
+    }
+
+    .input-icon-wrapper i {
+      color: #5b78b0;
+      font-size: 1.1rem;
+      margin-right: 12px;
+    }
+
+    .input-icon-wrapper input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 16px 0;
+      color: white;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .input-icon-wrapper input::placeholder {
+      color: #3f5582;
+      font-weight: 300;
+    }
+
+    /* modern captcha style */
+    .captcha-box {
+      background: rgba(20, 35, 60, 0.7);
+      border: 1px solid #34528b;
+      border-radius: 40px;
+      padding: 12px 22px;
+      margin: 28px 0 22px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+
+    .captcha-box:hover {
+      background: #1f3152;
+      border-color: #5a82d6;
+    }
+
+    .captcha-checkbox {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: #0f1e38;
+      border: 2px solid #3d5e96;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: 0.1s;
+    }
+
+    .captcha-checkbox.checked {
+      background: #2563eb;
+      border-color: #97bbff;
+    }
+
+    .captcha-text {
+      flex: 1;
+      font-weight: 500;
+      color: #d3e0ff;
+    }
+
+    .captcha-icon {
+      font-size: 2rem;
+      opacity: 0.8;
+    }
+
+    .btn-modern {
+      background: linear-gradient(105deg, #2563eb, #1d4ed8);
+      border: none;
+      border-radius: 40px;
+      padding: 16px 28px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: white;
+      width: 100%;
+      cursor: pointer;
+      box-shadow: 0 16px 30px -10px #0f2b6b;
+      transition: 0.2s;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-modern:hover {
+      background: linear-gradient(105deg, #2e6af0, #2563eb);
+      transform: translateY(-2px);
+      box-shadow: 0 22px 35px -10px #1d4ed8;
+    }
+
+    .btn-outline-modern {
+      background: transparent;
+      border: 1px solid #3b70cf;
+      box-shadow: none;
+      color: #c7dbff;
+    }
+
+    .btn-outline-modern:hover {
+      background: rgba(59, 130, 246, 0.15);
+      transform: none;
+    }
+
+    .separator-modern {
+      display: flex;
+      align-items: center;
+      color: #456291;
+      font-size: 0.8rem;
+      margin: 28px 0 20px;
+    }
+
+    .separator-modern::before, .separator-modern::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, #385c9e, transparent);
+    }
+
+    .separator-modern span {
+      margin: 0 12px;
+    }
+
+    /* dashboard style */
+    .dashboard-header-modern {
+      background: rgba(8, 19, 37, 0.6);
+      backdrop-filter: blur(14px);
+      border-radius: 80px;
+      padding: 12px 20px 12px 32px;
+      margin-bottom: 40px;
+      border: 1px solid #2f4a7a;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 20px 30px -12px #030613;
+    }
+
+    .greeting-modern {
+      font-size: 1.3rem;
+      font-weight: 400;
+    }
+
+    .greeting-modern span {
+      font-weight: 700;
+      background: linear-gradient(to right, #b9dcff, #ffffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .profile-section {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .avatar-modern {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #2563eb, #8b5cf6);
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.6rem;
+      color: white;
+      border: 2px solid #a0c0ff;
+      box-shadow: 0 6px 16px #142c54;
+    }
+
+    .logout-btn-modern {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid #33548b;
+      border-radius: 40px;
+      padding: 12px 24px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .logout-btn-modern:hover {
+      background: #253d64;
+      border-color: #5b80c0;
+    }
+
+    .stats-grid-modern {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card-modern {
+      background: rgba(12, 26, 45, 0.7);
+      backdrop-filter: blur(8px);
+      border-radius: 36px;
+      padding: 28px 24px;
+      border: 1px solid #2e4670;
+      transition: 0.2s;
+    }
+
+    .stat-card-modern:hover {
+      background: #1a2e50;
+      border-color: #4f77c2;
+    }
+
+    .stat-icon {
+      font-size: 2.2rem;
+      color: #5282ff;
+      margin-bottom: 16px;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #a1b9e6;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+      font-size: 2.6rem;
+      font-weight: 700;
+      line-height: 1.2;
+      background: linear-gradient(to right, #fff, #b3ceff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .launch-card-modern {
+      grid-column: span 3;
+      background: linear-gradient(135deg, #14284b, #0b1a38);
+      border-radius: 48px;
+      padding: 36px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid #3f69b0;
+      box-shadow: 0 30px 40px -18px #0b1e3b;
+    }
+
+    .launch-text h2 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .launch-text p {
+      color: #adc6ff;
+      font-size: 1.1rem;
+    }
+
+    .tv-button-modern {
+      background: linear-gradient(145deg, #2563eb, #1e40af);
+      border: none;
+      border-radius: 60px;
+      padding: 20px 48px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      box-shadow: 0 25px 40px -12px #1e3a8a;
+      transition: 0.15s;
+      border: 1px solid #79a5ff;
+    }
+
+    .tv-button-modern i {
+      font-size: 1.8rem;
+    }
+
+    .tv-button-modern:hover {
+      background: #2e6af0;
+      transform: scale(1.02);
+      box-shadow: 0 30px 45px -8px #1e3a8a;
+    }
+
+    /* channel preview */
+    .channel-preview-modern {
+      background: rgba(8, 19, 37, 0.6);
+      backdrop-filter: blur(8px);
+      border-radius: 40px;
+      padding: 28px;
+      border: 1px solid #2a3f68;
+      margin: 36px 0 24px;
+    }
+
+    .preview-header {
+      display: flex;
+      justify-content: space-between;
+      color: #94afdf;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .channel-row-modern {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 12px 0;
+      border-bottom: 1px solid #1f3457;
+    }
+
+    .channel-row-modern img {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      background: #233a60;
+      object-fit: cover;
+    }
+
+    .channel-dummy {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      background: #1f3560;
+    }
+
+    .footer-modern {
+      text-align: center;
+      padding: 32px 0 10px;
+      color: #385997;
+      font-size: 0.9rem;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 800px) {
+      .stats-grid-modern {
+        grid-template-columns: 1fr;
+      }
+      .launch-card-modern {
+        flex-direction: column;
+        text-align: center;
+        gap: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-wrapper" id="appWrapper">
+  <!-- HALAMAN LOGIN / REGISTER MODERN -->
+  <div id="authSection">
+    <div class="auth-card glass-morph">
+      <div class="auth-header">
+        <div class="logo">⏺️ SendyTV</div>
+        <p>Masuk untuk nikmati ribuan channel global</p>
+      </div>
+
+      <!-- Tab modern -->
+      <div class="auth-tabs-modern">
+        <button class="auth-tab-modern active" id="loginTabBtn" onclick="switchAuthTab('login')">Masuk</button>
+        <button class="auth-tab-modern" id="registerTabBtn" onclick="switchAuthTab('register')">Daftar</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div id="loginForm">
+        <div class="input-group-modern">
+          <label><i class="far fa-user-circle"></i> NAMA PENGGUNA / EMAIL</label>
+          <div class="input-icon-wrapper">
+            <i class="far fa-user"></i>
+            <input type="text" id="loginUsername" placeholder="cth: tamu" autocomplete="off">
+          </div>
+        </div>
+        <div class="input-group-modern">
+          <label><i class="far fa-lock"></i> KATA SANDI</label>
+          <div class="input-icon-wrapper">
+            <i class="far fa-lock"></i>
+            <input type="password" id="loginPassword" placeholder="••••••••">
+          </div>
+        </div>
+
+        <!-- CAPTCHA MODERN "Saya bukan robot" -->
+        <div class="captcha-box" id="loginCaptchaBox" onclick="toggleCaptcha('login')">
+          <div class="captcha-checkbox" id="loginCaptchaCheck">
+            <i class="fas fa-check" id="loginCaptchaIcon" style="opacity:0; transition:0.1s"></i>
+          </div>
+          <span class="captcha-text">Saya bukan robot</span>
+          <i class="fas fa-robot captcha-icon"></i>
+        </div>
+
+        <button class="btn-modern" onclick="handleLogin()"><i class="fas fa-sign-in-alt"></i> Masuk ke Dashboard</button>
+
+        <div class="separator-modern"><span>ATAU</span></div>
+        <button class="btn-modern btn-outline-modern" onclick="quickDemoLogin()"><i class="fas fa-id-card"></i> Demo (tamu / 123456)</button>
+      </div>
+
+      <!-- REGISTER FORM -->
+      <div id="registerForm" class="hidden">
+        <div class="input-group-modern">
+          <label>NAMA LENGKAP</label>
+          <div class="input-icon-wrapper">
+            <i class="far fa-user"></i>
+            <input type="text" id="regName" placeholder="Mis: Andi Wijaya">
+          </div>
+        </div>
+        <div class="input-group-modern">
+          <label>EMAIL (OPSIONAL)</label>
+          <div class="input-icon-wrapper">
+            <i class="far fa-envelope"></i>
+            <input type="email" id="regEmail" placeholder="email@contoh.com">
+          </div>
+        </div>
+        <div class="input-group-modern">
+          <label>KATA SANDI</label>
+          <div class="input-icon-wrapper">
+            <i class="far fa-key"></i>
+            <input type="password" id="regPassword" placeholder="Minimal 4 karakter">
+          </div>
+        </div>
+
+        <!-- Captcha untuk register -->
+        <div class="captcha-box" id="registerCaptchaBox" onclick="toggleCaptcha('register')">
+          <div class="captcha-checkbox" id="registerCaptchaCheck">
+            <i class="fas fa-check" id="registerCaptchaIcon" style="opacity:0;"></i>
+          </div>
+          <span class="captcha-text">Saya bukan robot</span>
+          <i class="fas fa-shield-alt captcha-icon"></i>
+        </div>
+
+        <button class="btn-modern" onclick="handleRegister()"><i class="fas fa-user-plus"></i> Daftar & Masuk</button>
+        <p style="text-align:center; font-size:0.8rem; color:#5a74a3; margin-top:22px;">Dengan mendaftar, Anda setuju dengan ketentuan kami</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD MODERN -->
+  <div id="dashboardSection" class="hidden">
+    <div class="dashboard-header-modern">
+      <div class="greeting-modern">
+        <i class="fas fa-hand-wave" style="margin-right:8px;"></i> Selamat datang, <span id="displayName">User</span>
+      </div>
+      <div class="profile-section">
+        <div class="avatar-modern" id="avatarInitials">U</div>
+        <div class="logout-btn-modern" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i> Keluar
+        </div>
+      </div>
+    </div>
+
+    <!-- Statistik keren -->
+    <div class="stats-grid-modern">
+      <div class="stat-card-modern">
+        <i class="fas fa-satellite-dish stat-icon"></i>
+        <div class="stat-label">Total Channel</div>
+        <div class="stat-value">210+</div>
+      </div>
+      <div class="stat-card-modern">
+        <i class="fas fa-globe-asia stat-icon"></i>
+        <div class="stat-label">Negara</div>
+        <div class="stat-value">27</div>
+      </div>
+      <div class="stat-card-modern">
+        <i class="fas fa-clock stat-icon"></i>
+        <div class="stat-label">Siaran 24/7</div>
+        <div class="stat-value">∞</div>
+      </div>
+    </div>
+
+    <!-- Tombol utama ke tv5 (modern) -->
+    <div class="launch-card-modern">
+      <div class="launch-text">
+        <h2><i class="fas fa-tv" style="margin-right:14px;"></i>SendyTV Global</h2>
+        <p>Jelajahi ribuan siaran mancanegara dalam satu klik.</p>
+      </div>
+      <button class="tv-button-modern" onclick="launchTvPage()">
+        <i class="fas fa-play"></i> Tonton Sekarang
+      </button>
+    </div>
+
+    <!-- Preview kecil channel populer -->
+    <div class="channel-preview-modern">
+      <div class="preview-header">
+        <span><i class="fas fa-fire" style="margin-right:8px;"></i>Channel populer</span>
+        <span>LIVE <i class="fas fa-circle" style="color:#22c55e; font-size:0.6rem;"></i></span>
+      </div>
+      <div class="channel-row-modern">
+        <img src="https://placehold.co/60x60/1e2b44/white?text=CNN" alt="">
+        <span>CNN International</span>
+      </div>
+      <div class="channel-row-modern">
+        <img src="https://placehold.co/60x60/1e2b44/white?text=BBC" alt="">
+        <span>BBC World News</span>
+      </div>
+      <div class="channel-row-modern">
+        <img src="https://placehold.co/60x60/1e2b44/white?text=FOX" alt="">
+        <span>Fox Sports</span>
+      </div>
+    </div>
+
+    <div class="footer-modern">
+      <i class="far fa-copyright"></i> SendyTV 2026 • Teknologi IPTV
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // ---------- Simulasi Database & Session ----------
+    const STORAGE_USERS = 'tv_users';
+    const STORAGE_SESSION = 'tv_session';
+
+    // State captcha: masing-masing form
+    let loginCaptchaPassed = false;
+    let registerCaptchaPassed = false;
+
+    function initUserDB() {
+      if (!localStorage.getItem(STORAGE_USERS)) {
+        const defaultUsers = [
+          { fullName: 'Tamu', email: 'tamu@demo.com', password: '123456', username: 'tamu' }
+        ];
+        localStorage.setItem(STORAGE_USERS, JSON.stringify(defaultUsers));
+      }
+    }
+    initUserDB();
+
+    let currentUser = null;
+    const sessionData = localStorage.getItem(STORAGE_SESSION);
+    if (sessionData) {
+      try { currentUser = JSON.parse(sessionData); } catch (e) {}
+    }
+
+    // Elemen
+    const authDiv = document.getElementById('authSection');
+    const dashboardDiv = document.getElementById('dashboardSection');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const loginTabBtn = document.getElementById('loginTabBtn');
+    const registerTabBtn = document.getElementById('registerTabBtn');
+    const displayNameSpan = document.getElementById('displayName');
+    const avatarInitSpan = document.getElementById('avatarInitials');
+
+    // captcha elements
+    const loginCaptchaCheck = document.getElementById('loginCaptchaCheck');
+    const loginCaptchaIcon = document.getElementById('loginCaptchaIcon');
+    const registerCaptchaCheck = document.getElementById('registerCaptchaCheck');
+    const registerCaptchaIcon = document.getElementById('registerCaptchaIcon');
+
+    // Update UI by session
+    function updateUIBasedOnSession() {
+      if (currentUser) {
+        authDiv.classList.add('hidden');
+        dashboardDiv.classList.remove('hidden');
+        let name = currentUser.fullName || currentUser.username || 'User';
+        displayNameSpan.innerText = name;
+        let initial = name.charAt(0).toUpperCase();
+        avatarInitSpan.innerText = initial;
+      } else {
+        authDiv.classList.remove('hidden');
+        dashboardDiv.classList.add('hidden');
+        switchAuthTab('login');
+        resetCaptcha();
+      }
+    }
+
+    function resetCaptcha() {
+      loginCaptchaPassed = false;
+      registerCaptchaPassed = false;
+      loginCaptchaCheck.classList.remove('checked');
+      loginCaptchaIcon.style.opacity = '0';
+      registerCaptchaCheck.classList.remove('checked');
+      registerCaptchaIcon.style.opacity = '0';
+    }
+
+    // switch tab
+    window.switchAuthTab = function(tab) {
+      if (tab === 'login') {
+        loginForm.classList.remove('hidden');
+        registerForm.classList.add('hidden');
+        loginTabBtn.classList.add('active');
+        registerTabBtn.classList.remove('active');
+      } else {
+        loginForm.classList.add('hidden');
+        registerForm.classList.remove('hidden');
+        loginTabBtn.classList.remove('active');
+        registerTabBtn.classList.add('active');
+      }
+      resetCaptcha();
+    };
+
+    // toggle captcha
+    window.toggleCaptcha = function(form) {
+      if (form === 'login') {
+        loginCaptchaPassed = !loginCaptchaPassed;
+        if (loginCaptchaPassed) {
+          loginCaptchaCheck.classList.add('checked');
+          loginCaptchaIcon.style.opacity = '1';
+        } else {
+          loginCaptchaCheck.classList.remove('checked');
+          loginCaptchaIcon.style.opacity = '0';
+        }
+      } else if (form === 'register') {
+        registerCaptchaPassed = !registerCaptchaPassed;
+        if (registerCaptchaPassed) {
+          registerCaptchaCheck.classList.add('checked');
+          registerCaptchaIcon.style.opacity = '1';
+        } else {
+          registerCaptchaCheck.classList.remove('checked');
+          registerCaptchaIcon.style.opacity = '0';
+        }
+      }
+    };
+
+    // Login handler
+    window.handleLogin = function() {
+      if (!loginCaptchaPassed) {
+        alert('Harap centang "Saya bukan robot"');
+        return;
+      }
+
+      const username = document.getElementById('loginUsername').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
+
+      if (!username || !password) {
+        alert('Isi nama pengguna dan kata sandi');
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem(STORAGE_USERS)) || [];
+      const foundUser = users.find(u => (u.username?.toLowerCase() === username.toLowerCase() || u.fullName?.toLowerCase() === username.toLowerCase() || u.email?.toLowerCase() === username.toLowerCase()) && u.password === password);
+
+      if (foundUser) {
+        currentUser = { fullName: foundUser.fullName, username: foundUser.username || foundUser.fullName };
+        localStorage.setItem(STORAGE_SESSION, JSON.stringify(currentUser));
+        updateUIBasedOnSession();
+        document.getElementById('loginUsername').value = '';
+        document.getElementById('loginPassword').value = '';
+        resetCaptcha();
+      } else {
+        alert('Nama/email atau kata sandi salah. Coba "tamu" / "123456".');
+      }
+    };
+
+    window.quickDemoLogin = function() {
+      // bypass captcha for demo (optional: auto centang)
+      loginCaptchaPassed = true; // paksa
+      document.getElementById('loginUsername').value = 'tamu';
+      document.getElementById('loginPassword').value = '123456';
+      handleLogin(); // captcha sudah true
+    };
+
+    window.handleRegister = function() {
+      if (!registerCaptchaPassed) {
+        alert('Harap centang "Saya bukan robot"');
+        return;
+      }
+
+      const fullName = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPassword').value.trim();
+
+      if (!fullName || !password) {
+        alert('Nama dan kata sandi wajib diisi');
+        return;
+      }
+      if (password.length < 4) {
+        alert('Kata sandi minimal 4 karakter');
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem(STORAGE_USERS)) || [];
+      const exists = users.some(u => u.fullName?.toLowerCase() === fullName.toLowerCase() || u.username?.toLowerCase() === fullName.toLowerCase() || (email && u.email === email));
+      if (exists) {
+        alert('Nama atau email sudah terdaftar');
+        return;
+      }
+
+      const newUser = {
+        fullName: fullName,
+        email: email || '',
+        password: password,
+        username: fullName.toLowerCase().replace(/\s/g, '') + Math.floor(Math.random()*100)
+      };
+      users.push(newUser);
+      localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
+
+      currentUser = { fullName: fullName, username: newUser.username };
+      localStorage.setItem(STORAGE_SESSION, JSON.stringify(currentUser));
+      updateUIBasedOnSession();
+
+      document.getElementById('regName').value = '';
+      document.getElementById('regEmail').value = '';
+      document.getElementById('regPassword').value = '';
+      resetCaptcha();
+    };
+
+    window.logout = function() {
+      localStorage.removeItem(STORAGE_SESSION);
+      currentUser = null;
+      updateUIBasedOnSession();
+    };
+
+    window.launchTvPage = function() {
+      window.location.href = 'tv5.html';
+    };
+
+    updateUIBasedOnSession();
+  })();
+</script>
+
+</body>
+</html>

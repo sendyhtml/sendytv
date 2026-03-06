@@ -83,6 +83,49 @@
       font-weight: 300;
     }
 
+    /* Nav tabs untuk kategori */
+    .category-tabs {
+      max-width: 1200px;
+      margin: 20px auto 10px;
+      padding: 0 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .category-btn {
+      background: rgba(20, 35, 60, 0.6);
+      border: 1px solid #314e7a;
+      color: #b9d0ff;
+      padding: 10px 22px;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .category-btn i {
+      font-size: 1rem;
+    }
+
+    .category-btn:hover, .category-btn.active {
+      background: #2563eb;
+      border-color: #97bbff;
+      color: white;
+      box-shadow: 0 8px 18px -6px #1e4bb3;
+    }
+
+    .category-btn.active {
+      background: #2563eb;
+      border-color: white;
+    }
+
     /* Player section */
     .player-section {
       background: #050a15;
@@ -261,6 +304,13 @@
   </div>
 </header>
 
+<!-- Kategori Rekomendasi -->
+<div class="category-tabs">
+  <button class="category-btn active" onclick="filterCategory('semua')"><i class="fas fa-tv"></i> Semua Channel</button>
+  <button class="category-btn" onclick="filterCategory('indonesia')"><i class="fas fa-flag"></i> Indonesia</button>
+  <button class="category-btn" onclick="filterCategory('rekomendasi')"><i class="fas fa-star"></i> Rekomendasi</button>
+</div>
+
 <div class="player-section">
   <div id="player">
     <video id="video" controls playsinline></video>
@@ -285,11 +335,27 @@
 
   let channels = [];
   let filtered = [];
+  let activeFilter = 'semua'; // untuk tracking filter aktif
 
   const channelsEl = document.getElementById("channels");
   const searchEl = document.getElementById("search");
   const video = document.getElementById("video");
   const channelCountSpan = document.getElementById("channel-count");
+  const categoryBtns = document.querySelectorAll('.category-btn');
+
+  // Daftar channel Indonesia yang akan direkomendasikan (sebagai fallback jika tidak ada di playlist)
+  const indonesianChannels = [
+    { name: 'RTV', logo: 'https://www.rtv.co.id/logo.png', group: 'Indonesia', url: 'https://cdn-tvkly.rtv.co.id/web/hls/live/2036082/rtv/playlist.m3u8' },
+    { name: 'GTV', logo: 'https://www.gtv.com/logo.png', group: 'Indonesia', url: 'https://gtv.mncnow.id/live/eds/GTV/sa_hls/GTV-02.m3u8' },
+    { name: 'ANTV', logo: 'https://www.antv.com/logo.png', group: 'Indonesia', url: 'https://antv.mncnow.id/live/eds/ANTV/sa_hls/ANTV-02.m3u8' },
+    { name: 'TRANS7', logo: 'https://www.trans7.com/logo.png', group: 'Indonesia', url: 'https://trans7.mncnow.id/live/eds/Trans7/sa_hls/Trans7-02.m3u8' },
+    { name: 'MNCTV', logo: 'https://www.mnctv.com/logo.png', group: 'Indonesia', url: 'https://mncvision.mncnow.id/live/eds/MNCTV/sa_hls/MNCTV-02.m3u8' },
+    { name: 'INDOSIAR', logo: 'https://www.indosiar.com/logo.png', group: 'Indonesia', url: 'https://indosiar.mncnow.id/live/eds/Indosiar/sa_hls/Indosiar-02.m3u8' },
+    { name: 'SCTV', logo: 'https://www.sctv.com/logo.png', group: 'Indonesia', url: 'https://sctv.mncnow.id/live/eds/SCTV/sa_hls/SCTV-02.m3u8' },
+    { name: 'METRO TV', logo: 'https://www.metrotv.com/logo.png', group: 'Berita', url: 'https://metrotv.mncnow.id/live/eds/MetroTV/sa_hls/MetroTV-02.m3u8' },
+    { name: 'KOMPAS TV', logo: 'https://www.kompas.tv/logo.png', group: 'Berita', url: 'https://kompastv.mncnow.id/live/eds/KompasTV/sa_hls/KompasTV-02.m3u8' },
+    { name: 'TVRI', logo: 'https://www.tvri.go.id/logo.png', group: 'Indonesia', url: 'https://tvri.mncnow.id/live/eds/TVRI/sa_hls/TVRI-02.m3u8' }
+  ];
 
   function parseM3U(text) {
     const lines = text.split("\n");
@@ -319,7 +385,96 @@
       }
     });
 
+    // Tambahkan channel Indonesia jika belum ada di playlist
+    addIndonesianChannels();
+
     filtered = [...channels];
+    applyFilter(activeFilter);
+  }
+
+  function addIndonesianChannels() {
+    // Cek apakah channel Indonesia sudah ada, jika belum tambahkan
+    indonesianChannels.forEach(indoChan => {
+      const exists = channels.some(ch => 
+        ch.name.toLowerCase().includes(indoChan.name.toLowerCase()) || 
+        (ch.url && ch.url.includes(indoChan.url.split('/')[2]))
+      );
+      
+      if (!exists) {
+        channels.push(indoChan);
+      }
+    });
+  }
+
+  function filterCategory(category) {
+    activeFilter = category;
+    
+    // Update active class pada button
+    categoryBtns.forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.textContent.toLowerCase().includes(category) || 
+          (category === 'semua' && btn.textContent.includes('Semua')) ||
+          (category === 'indonesia' && btn.textContent.includes('Indonesia')) ||
+          (category === 'rekomendasi' && btn.textContent.includes('Rekomendasi')) ||
+          (category === 'berita' && btn.textContent.includes('Berita')) ||
+          (category === 'olahraga' && btn.textContent.includes('Olahraga'))) {
+        btn.classList.add('active');
+      }
+    });
+
+    applyFilter(category);
+  }
+
+  function applyFilter(category) {
+    if (category === 'semua') {
+      filtered = [...channels];
+    } else if (category === 'indonesia') {
+      filtered = channels.filter(ch => 
+        ch.group?.toLowerCase().includes('indonesia') || 
+        ch.name?.toLowerCase().includes('indonesia') ||
+        indonesianChannels.some(ic => ic.name.toLowerCase() === ch.name.toLowerCase())
+      );
+      
+      // Jika tidak ada, tampilkan channel Indonesia dari daftar
+      if (filtered.length === 0) {
+        filtered = indonesianChannels;
+      }
+    } else if (category === 'rekomendasi') {
+      // Rekomendasi: 6 channel Indonesia utama + beberapa internasional populer
+      const rekomendasiNama = ['RTV', 'GTV', 'ANTV', 'TRANS7', 'MNCTV', 'INDOSIAR', 'CNN', 'BBC', 'FOX', 'METRO TV'];
+      filtered = channels.filter(ch => 
+        rekomendasiNama.some(nama => ch.name.toLowerCase().includes(nama.toLowerCase()))
+      );
+      
+      if (filtered.length < 6) {
+        // Tambahkan dari indonesianChannels jika perlu
+        filtered = [...filtered, ...indonesianChannels.slice(0, 6)];
+      }
+    } else if (category === 'berita') {
+      filtered = channels.filter(ch => 
+        ch.group?.toLowerCase().includes('berita') || 
+        ch.group?.toLowerCase().includes('news') ||
+        ch.name?.toLowerCase().includes('news') ||
+        ch.name?.toLowerCase().includes('metro') ||
+        ch.name?.toLowerCase().includes('kompas') ||
+        ch.name?.toLowerCase().includes('cnn') ||
+        ch.name?.toLowerCase().includes('bbc')
+      );
+    } else if (category === 'olahraga') {
+      filtered = channels.filter(ch => 
+        ch.group?.toLowerCase().includes('olahraga') || 
+        ch.group?.toLowerCase().includes('sport') ||
+        ch.name?.toLowerCase().includes('sport') ||
+        ch.name?.toLowerCase().includes('football') ||
+        ch.name?.toLowerCase().includes('bola')
+      );
+    }
+
+    // Jika masih kosong, gunakan semua channel
+    if (filtered.length === 0) {
+      filtered = [...channels];
+    }
+
     render();
   }
 
@@ -333,15 +488,16 @@
     }
 
     let html = '';
-    filtered.forEach(ch => {
+    filtered.slice(0, 50).forEach(ch => { // batasi 50 channel agar tidak terlalu banyak
+      const logoUrl = ch.logo || `https://placehold.co/60x60/1e2b44/white?text=${ch.name.charAt(0)}`;
       html += `
         <div class="channel-card" data-url="${ch.url}">
-          <img class="channel-logo" src="${ch.logo || 'https://placehold.co/60x60/1e2b44/white?text=' + ch.name.charAt(0)}" 
+          <img class="channel-logo" src="${logoUrl}" 
                alt="${ch.name}" loading="lazy" 
-               onerror="this.src='https://placehold.co/60x60/1e2b44/white?text=' + '${ch.name.charAt(0)}';">
+               onerror="this.src='https://placehold.co/60x60/1e2b44/white?text=${ch.name.charAt(0)}';">
           <div class="channel-info">
             <div class="channel-name">${ch.name}</div>
-            <div class="channel-group"><i class="fa-regular fa-folder" style="margin-right: 4px;"></i>${ch.group}</div>
+            <div class="channel-group"><i class="fa-regular fa-folder" style="margin-right: 4px;"></i>${ch.group || 'Umum'}</div>
           </div>
         </div>
       `;
@@ -396,13 +552,14 @@
       const q = searchEl.value.trim().toLowerCase();
       if (q === '') {
         filtered = [...channels];
+        applyFilter(activeFilter);
       } else {
         filtered = channels.filter(ch => 
           ch.name.toLowerCase().includes(q) || 
           (ch.group && ch.group.toLowerCase().includes(q))
         );
+        render();
       }
-      render();
     }, 200);
   });
 
@@ -414,11 +571,17 @@
     })
     .then(parseM3U)
     .catch(err => {
-      channelsEl.innerHTML = `<div class="no-result"><i class="fa-solid fa-triangle-exclamation" style="color:#f97316;"></i> Gagal memuat channel. Coba refresh.</div>`;
       console.error(err);
+      // Jika gagal fetch, tetap tampilkan channel Indonesia
+      channels = [...indonesianChannels];
+      filtered = [...channels];
+      render();
+      channelsEl.innerHTML = `<div class="no-result"><i class="fa-solid fa-info-circle"></i> Menggunakan channel rekomendasi lokal</div>`;
     });
 
-  // Optional: click outside to hide? tidak perlu
+  // Fungsi global untuk filter (dipanggil dari button)
+  window.filterCategory = filterCategory;
 </script>
+
 </body>
 </html>
