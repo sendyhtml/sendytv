@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SendyTV • Modern Dashboard & Login</title>
+  <title>SendyTV • Digital Tv</title>
   <!-- Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <!-- Google Font Inter -->
@@ -47,6 +47,66 @@
       z-index: 2;
     }
 
+    /* Header SendyTV yang sama dengan tv5.html */
+    .sendy-header {
+      background: linear-gradient(90deg, #0f1f40 0%, #1a2b50 100%);
+      padding: 14px 24px; /* padding sedikit lebih kecil */
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #3b82f6;
+      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.7);
+      border-radius: 60px 60px 20px 20px;
+      margin-bottom: 30px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      font-size: 1.8rem; /* lebih kecil dari sebelumnya */
+      color: #3b82f6;
+      filter: drop-shadow(0 0 10px #3b82f6);
+    }
+
+    .logo-text {
+      font-size: 1.5rem; /* ukuran lebih kecil */
+      font-weight: 700;
+      background: linear-gradient(to right, #ffffff, #a0c0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 1px;
+    }
+
+    .logo-text span {
+      background: linear-gradient(to right, #3b82f6, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+    }
+
+    .tv-link {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid #3b70cf;
+      color: white;
+      padding: 8px 18px; /* padding lebih kecil */
+      border-radius: 40px;
+      text-decoration: none;
+      font-size: 0.85rem; /* font lebih kecil */
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tv-link:hover {
+      background: #2563eb;
+      border-color: white;
+    }
+
     /* premium glassmorphism */
     .glass-morph {
       background: rgba(10, 20, 40, 0.5);
@@ -60,8 +120,8 @@
     /* login card */
     .auth-card {
       max-width: 480px;
-      margin: 30px auto;
-      padding: 40px 36px;
+      margin: 20px auto; /* margin lebih kecil */
+      padding: 36px 32px; /* padding lebih kecil */
       transition: transform 0.3s ease;
     }
 
@@ -71,22 +131,22 @@
 
     .auth-header {
       text-align: center;
-      margin-bottom: 32px;
+      margin-bottom: 28px; /* margin lebih kecil */
     }
 
     .auth-header .logo {
-      font-size: 2.8rem;
+      font-size: 2.2rem; /* lebih kecil */
       font-weight: 700;
       background: linear-gradient(to right, #a6c9ff, #5fa4ff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: -0.5px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .auth-header p {
       color: #8da4cc;
-      font-size: 0.95rem;
+      font-size: 0.9rem; /* lebih kecil */
     }
 
     .auth-tabs-modern {
@@ -96,7 +156,7 @@
       border-radius: 60px;
       padding: 6px;
       border: 1px solid #263b60;
-      margin-bottom: 36px;
+      margin-bottom: 30px; /* margin lebih kecil */
     }
 
     .auth-tab-modern {
@@ -105,8 +165,8 @@
       border: none;
       color: #a7bee7;
       font-weight: 600;
-      font-size: 1.1rem;
-      padding: 12px 10px;
+      font-size: 1rem; /* lebih kecil */
+      padding: 10px 10px; /* padding lebih kecil */
       border-radius: 60px;
       cursor: pointer;
       transition: all 0.2s;
@@ -119,17 +179,17 @@
     }
 
     .input-group-modern {
-      margin-bottom: 24px;
+      margin-bottom: 20px; /* margin lebih kecil */
     }
 
     .input-group-modern label {
       display: block;
-      font-size: 0.8rem;
+      font-size: 0.75rem; /* lebih kecil */
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       color: #9fb0da;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .input-icon-wrapper {
@@ -138,7 +198,7 @@
       background: rgba(5, 15, 30, 0.7);
       border: 1px solid #2a3d68;
       border-radius: 36px;
-      padding: 4px 20px;
+      padding: 4px 18px; /* padding lebih kecil */
       transition: all 0.2s;
     }
 
@@ -150,17 +210,17 @@
 
     .input-icon-wrapper i {
       color: #5b78b0;
-      font-size: 1.1rem;
-      margin-right: 12px;
+      font-size: 1rem; /* lebih kecil */
+      margin-right: 10px;
     }
 
     .input-icon-wrapper input {
       flex: 1;
       background: transparent;
       border: none;
-      padding: 16px 0;
+      padding: 14px 0; /* padding lebih kecil */
       color: white;
-      font-size: 1rem;
+      font-size: 0.95rem; /* lebih kecil */
       outline: none;
     }
 
@@ -174,11 +234,11 @@
       background: rgba(20, 35, 60, 0.7);
       border: 1px solid #34528b;
       border-radius: 40px;
-      padding: 12px 22px;
-      margin: 28px 0 22px;
+      padding: 10px 20px; /* padding lebih kecil */
+      margin: 24px 0 18px; /* margin lebih kecil */
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
       cursor: pointer;
       transition: all 0.2s;
       user-select: none;
@@ -190,9 +250,9 @@
     }
 
     .captcha-checkbox {
-      width: 26px;
-      height: 26px;
-      border-radius: 8px;
+      width: 22px; /* lebih kecil */
+      height: 22px; /* lebih kecil */
+      border-radius: 6px;
       background: #0f1e38;
       border: 2px solid #3d5e96;
       display: flex;
@@ -211,10 +271,11 @@
       flex: 1;
       font-weight: 500;
       color: #d3e0ff;
+      font-size: 0.9rem; /* lebih kecil */
     }
 
     .captcha-icon {
-      font-size: 2rem;
+      font-size: 1.8rem; /* lebih kecil */
       opacity: 0.8;
     }
 
@@ -222,9 +283,9 @@
       background: linear-gradient(105deg, #2563eb, #1d4ed8);
       border: none;
       border-radius: 40px;
-      padding: 16px 28px;
+      padding: 14px 24px; /* padding lebih kecil */
       font-weight: 600;
-      font-size: 1.1rem;
+      font-size: 1rem; /* lebih kecil */
       color: white;
       width: 100%;
       cursor: pointer;
@@ -259,8 +320,8 @@
       display: flex;
       align-items: center;
       color: #456291;
-      font-size: 0.8rem;
-      margin: 28px 0 20px;
+      font-size: 0.75rem; /* lebih kecil */
+      margin: 22px 0 16px; /* margin lebih kecil */
     }
 
     .separator-modern::before, .separator-modern::after {
@@ -279,8 +340,8 @@
       background: rgba(8, 19, 37, 0.6);
       backdrop-filter: blur(14px);
       border-radius: 80px;
-      padding: 12px 20px 12px 32px;
-      margin-bottom: 40px;
+      padding: 12px 20px 12px 28px; /* padding lebih kecil */
+      margin-bottom: 30px; /* margin lebih kecil */
       border: 1px solid #2f4a7a;
       display: flex;
       align-items: center;
@@ -289,7 +350,7 @@
     }
 
     .greeting-modern {
-      font-size: 1.3rem;
+      font-size: 1.2rem; /* lebih kecil */
       font-weight: 400;
     }
 
@@ -303,19 +364,19 @@
     .profile-section {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 16px; /* gap lebih kecil */
     }
 
     .avatar-modern {
-      width: 56px;
-      height: 56px;
+      width: 48px; /* lebih kecil */
+      height: 48px; /* lebih kecil */
       background: linear-gradient(135deg, #2563eb, #8b5cf6);
       border-radius: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      font-size: 1.6rem;
+      font-size: 1.4rem; /* lebih kecil */
       color: white;
       border: 2px solid #a0c0ff;
       box-shadow: 0 6px 16px #142c54;
@@ -325,8 +386,9 @@
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid #33548b;
       border-radius: 40px;
-      padding: 12px 24px;
+      padding: 10px 20px; /* padding lebih kecil */
       font-weight: 500;
+      font-size: 0.9rem; /* lebih kecil */
       cursor: pointer;
       transition: 0.2s;
     }
@@ -339,15 +401,15 @@
     .stats-grid-modern {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-bottom: 32px;
+      gap: 20px; /* gap lebih kecil */
+      margin-bottom: 28px; /* margin lebih kecil */
     }
 
     .stat-card-modern {
       background: rgba(12, 26, 45, 0.7);
       backdrop-filter: blur(8px);
-      border-radius: 36px;
-      padding: 28px 24px;
+      border-radius: 32px; /* lebih kecil */
+      padding: 24px 20px; /* padding lebih kecil */
       border: 1px solid #2e4670;
       transition: 0.2s;
     }
@@ -358,20 +420,20 @@
     }
 
     .stat-icon {
-      font-size: 2.2rem;
+      font-size: 2rem; /* lebih kecil */
       color: #5282ff;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .stat-label {
-      font-size: 0.9rem;
+      font-size: 0.85rem; /* lebih kecil */
       color: #a1b9e6;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
     .stat-value {
-      font-size: 2.6rem;
+      font-size: 2.2rem; /* lebih kecil */
       font-weight: 700;
       line-height: 1.2;
       background: linear-gradient(to right, #fff, #b3ceff);
@@ -382,8 +444,8 @@
     .launch-card-modern {
       grid-column: span 3;
       background: linear-gradient(135deg, #14284b, #0b1a38);
-      border-radius: 48px;
-      padding: 36px 40px;
+      border-radius: 40px; /* lebih kecil */
+      padding: 30px 36px; /* padding lebih kecil */
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -392,27 +454,27 @@
     }
 
     .launch-text h2 {
-      font-size: 2.2rem;
+      font-size: 2rem; /* lebih kecil */
       font-weight: 600;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .launch-text p {
       color: #adc6ff;
-      font-size: 1.1rem;
+      font-size: 1rem; /* lebih kecil */
     }
 
     .tv-button-modern {
       background: linear-gradient(145deg, #2563eb, #1e40af);
       border: none;
       border-radius: 60px;
-      padding: 20px 48px;
-      font-size: 1.3rem;
+      padding: 16px 40px; /* padding lebih kecil */
+      font-size: 1.2rem; /* lebih kecil */
       font-weight: 700;
       color: white;
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
       cursor: pointer;
       box-shadow: 0 25px 40px -12px #1e3a8a;
       transition: 0.15s;
@@ -420,7 +482,7 @@
     }
 
     .tv-button-modern i {
-      font-size: 1.8rem;
+      font-size: 1.6rem; /* lebih kecil */
     }
 
     .tv-button-modern:hover {
@@ -433,48 +495,43 @@
     .channel-preview-modern {
       background: rgba(8, 19, 37, 0.6);
       backdrop-filter: blur(8px);
-      border-radius: 40px;
-      padding: 28px;
+      border-radius: 36px; /* lebih kecil */
+      padding: 24px; /* padding lebih kecil */
       border: 1px solid #2a3f68;
-      margin: 36px 0 24px;
+      margin: 30px 0 20px;
     }
 
     .preview-header {
       display: flex;
       justify-content: space-between;
       color: #94afdf;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       font-weight: 500;
+      font-size: 0.9rem; /* lebih kecil */
     }
 
     .channel-row-modern {
       display: flex;
       align-items: center;
-      gap: 18px;
-      padding: 12px 0;
+      gap: 16px;
+      padding: 10px 0;
       border-bottom: 1px solid #1f3457;
+      font-size: 0.95rem; /* lebih kecil */
     }
 
     .channel-row-modern img {
-      width: 44px;
-      height: 44px;
-      border-radius: 16px;
+      width: 40px; /* lebih kecil */
+      height: 40px; /* lebih kecil */
+      border-radius: 14px;
       background: #233a60;
       object-fit: cover;
     }
 
-    .channel-dummy {
-      width: 44px;
-      height: 44px;
-      border-radius: 16px;
-      background: #1f3560;
-    }
-
     .footer-modern {
       text-align: center;
-      padding: 32px 0 10px;
+      padding: 28px 0 8px;
       color: #385997;
-      font-size: 0.9rem;
+      font-size: 0.85rem; /* lebih kecil */
     }
 
     .hidden {
@@ -488,12 +545,28 @@
       .launch-card-modern {
         flex-direction: column;
         text-align: center;
-        gap: 28px;
+        gap: 24px;
+      }
+      .sendy-header {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
       }
     }
   </style>
 </head>
 <body>
+
+<!-- HEADER SENDYTV (sama dengan tv5.html, ukuran lebih kecil) -->
+<header class="sendy-header">
+  <div class="logo-area">
+    <i class="fas fa-tv"></i>
+    <div class="logo-text">Sendy<span>TV</span></div>
+  </div>
+  <a href="tv5.html" class="tv-link">
+    <i class="fas fa-play"></i> Tonton TV
+  </a>
+</header>
 
 <div class="app-wrapper" id="appWrapper">
   <!-- HALAMAN LOGIN / REGISTER MODERN -->
@@ -520,7 +593,7 @@
           </div>
         </div>
         <div class="input-group-modern">
-          <label><i class="far fa-lock"></i> KATA SANDI</label>
+          <label><i class="far fa-lock"></i> Password</label>
           <div class="input-icon-wrapper">
             <i class="far fa-lock"></i>
             <input type="password" id="loginPassword" placeholder="••••••••">
@@ -536,10 +609,10 @@
           <i class="fas fa-robot captcha-icon"></i>
         </div>
 
-        <button class="btn-modern" onclick="handleLogin()"><i class="fas fa-sign-in-alt"></i> Masuk ke Dashboard</button>
+        <button class="btn-modern" onclick="handleLogin()"><i class="fas fa-sign-in-alt"></i> Masuk</button>
 
         <div class="separator-modern"><span>ATAU</span></div>
-        <button class="btn-modern btn-outline-modern" onclick="quickDemoLogin()"><i class="fas fa-id-card"></i> Demo (tamu / 123456)</button>
+        <button class="btn-modern btn-outline-modern" onclick="quickDemoLogin()"><i class="fas fa-id-card"></i> Demo (tamu)</button>
       </div>
 
       <!-- REGISTER FORM -->
@@ -576,7 +649,7 @@
         </div>
 
         <button class="btn-modern" onclick="handleRegister()"><i class="fas fa-user-plus"></i> Daftar & Masuk</button>
-        <p style="text-align:center; font-size:0.8rem; color:#5a74a3; margin-top:22px;">Dengan mendaftar, Anda setuju dengan ketentuan kami</p>
+        <p style="text-align:center; font-size:0.75rem; color:#5a74a3; margin-top:18px;">Dengan mendaftar, Anda setuju dengan ketentuan kami</p>
       </div>
     </div>
   </div>
@@ -600,17 +673,11 @@
       <div class="stat-card-modern">
         <i class="fas fa-satellite-dish stat-icon"></i>
         <div class="stat-label">Total Channel</div>
-        <div class="stat-value">210+</div>
+        <div class="stat-value">220+</div>
       </div>
       <div class="stat-card-modern">
         <i class="fas fa-globe-asia stat-icon"></i>
-        <div class="stat-label">Negara</div>
-        <div class="stat-value">27</div>
-      </div>
-      <div class="stat-card-modern">
-        <i class="fas fa-clock stat-icon"></i>
-        <div class="stat-label">Siaran 24/7</div>
-        <div class="stat-value">∞</div>
+        <div class="stat-label">Nonton TV gratis</div>
       </div>
     </div>
 
@@ -623,26 +690,6 @@
       <button class="tv-button-modern" onclick="launchTvPage()">
         <i class="fas fa-play"></i> Tonton Sekarang
       </button>
-    </div>
-
-    <!-- Preview kecil channel populer -->
-    <div class="channel-preview-modern">
-      <div class="preview-header">
-        <span><i class="fas fa-fire" style="margin-right:8px;"></i>Channel populer</span>
-        <span>LIVE <i class="fas fa-circle" style="color:#22c55e; font-size:0.6rem;"></i></span>
-      </div>
-      <div class="channel-row-modern">
-        <img src="https://placehold.co/60x60/1e2b44/white?text=CNN" alt="">
-        <span>CNN International</span>
-      </div>
-      <div class="channel-row-modern">
-        <img src="https://placehold.co/60x60/1e2b44/white?text=BBC" alt="">
-        <span>BBC World News</span>
-      </div>
-      <div class="channel-row-modern">
-        <img src="https://placehold.co/60x60/1e2b44/white?text=FOX" alt="">
-        <span>Fox Sports</span>
-      </div>
     </div>
 
     <div class="footer-modern">

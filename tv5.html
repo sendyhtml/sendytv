@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SendyTV • Live</title>
+  <title>SendyTV • Live TV</title>
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -27,8 +27,66 @@
       flex-direction: column;
     }
 
-    /* Glassmorphism header */
-    header {
+    /* Header SendyTV */
+    .sendy-header {
+      background: linear-gradient(90deg, #0f1f40 0%, #1a2b50 100%);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #3b82f6;
+      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.7);
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      font-size: 2.2rem;
+      color: #3b82f6;
+      filter: drop-shadow(0 0 10px #3b82f6);
+    }
+
+    .logo-text {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(to right, #ffffff, #a0c0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 1px;
+    }
+
+    .logo-text span {
+      background: linear-gradient(to right, #3b82f6, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+    }
+
+    .dashboard-link {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid #3b70cf;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dashboard-link:hover {
+      background: #2563eb;
+      border-color: white;
+    }
+
+    /* Search header */
+    .search-header {
       position: sticky;
       top: 0;
       z-index: 50;
@@ -83,7 +141,7 @@
       font-weight: 300;
     }
 
-    /* Nav tabs untuk kategori */
+    /* Category tabs */
     .category-tabs {
       max-width: 1200px;
       margin: 20px auto 10px;
@@ -150,7 +208,7 @@
       background: black;
     }
 
-    /* channel counter */
+    /* Channel stats */
     .channel-stats {
       max-width: 1000px;
       margin: 18px auto 8px auto;
@@ -170,6 +228,118 @@
       font-size: 0.8rem;
       color: #b9d0ff;
       border: 1px solid #314b74;
+    }
+
+    /* Favorite section (disematkan di atas) */
+    .favorite-section {
+      max-width: 1200px;
+      margin: 20px auto 10px;
+      padding: 0 20px;
+    }
+
+    .favorite-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      background: rgba(59, 130, 246, 0.15);
+      padding: 12px 20px;
+      border-radius: 60px;
+      border: 1px solid #3b82f6;
+      backdrop-filter: blur(5px);
+    }
+
+    .favorite-header i {
+      color: #fbbf24;
+      font-size: 1.5rem;
+      filter: drop-shadow(0 0 8px gold);
+    }
+
+    .favorite-header h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .favorite-header span {
+      background: #2563eb;
+      padding: 4px 12px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      margin-left: 10px;
+    }
+
+    #favorite-channels {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .favorite-card {
+      background: rgba(30, 45, 75, 0.8);
+      backdrop-filter: blur(4px);
+      border: 2px solid #fbbf24;
+      border-radius: 20px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+      position: relative;
+    }
+
+    .favorite-card:hover {
+      transform: translateY(-4px);
+      border-color: #ffd966;
+      background: #2f4680;
+    }
+
+    .favorite-card img {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 2px solid #fbbf24;
+    }
+
+    .favorite-info {
+      flex: 1;
+    }
+
+    .favorite-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #ffefb0;
+    }
+
+    .favorite-group {
+      font-size: 0.7rem;
+      color: #b0c6f0;
+    }
+
+    .remove-fav {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      color: #ff6b6b;
+      font-size: 0.8rem;
+      padding: 4px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.5);
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .remove-fav:hover {
+      background: #ff4444;
+      color: white;
     }
 
     /* Grid channel list */
@@ -194,9 +364,9 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      cursor: pointer;
       transition: all 0.2s ease;
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+      position: relative;
     }
 
     .channel-card:hover {
@@ -204,6 +374,38 @@
       border-color: #3b5b9e;
       transform: translateY(-4px);
       box-shadow: 0 14px 26px -6px #0f1f40;
+    }
+
+    .favorite-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(0,0,0,0.5);
+      border: none;
+      color: #cbd5e1;
+      font-size: 1rem;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s;
+      z-index: 5;
+    }
+
+    .favorite-btn:hover {
+      background: #2563eb;
+      color: white;
+    }
+
+    .favorite-btn.active {
+      color: #fbbf24;
+    }
+
+    .favorite-btn.active:hover {
+      color: #ff6b6b;
     }
 
     .channel-logo {
@@ -214,11 +416,13 @@
       object-fit: cover;
       box-shadow: 0 4px 8px rgba(0,0,0,0.5);
       border: 1px solid #3f5680;
+      cursor: pointer;
     }
 
     .channel-info {
       flex: 1;
       overflow: hidden;
+      cursor: pointer;
     }
 
     .channel-name {
@@ -228,6 +432,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       color: #f0f4ff;
+      padding-right: 25px;
     }
 
     .channel-group {
@@ -246,7 +451,6 @@
       text-overflow: ellipsis;
     }
 
-    /* loading shimmer */
     .loading-state {
       grid-column: 1 / -1;
       text-align: center;
@@ -255,7 +459,6 @@
       font-size: 1.2rem;
     }
 
-    /* responsive */
     @media (max-width: 600px) {
       #channels {
         grid-template-columns: 1fr;
@@ -263,9 +466,13 @@
       .channel-card {
         padding: 14px;
       }
+      .sendy-header {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
     }
 
-    /* custom scroll */
     ::-webkit-scrollbar {
       width: 8px;
       height: 8px;
@@ -281,7 +488,6 @@
       background: #3b5e96;
     }
 
-    /* empty state */
     .no-result {
       grid-column: 1/-1;
       text-align: center;
@@ -295,22 +501,34 @@
 </head>
 <body>
 
-<header>
+<!-- Header SendyTV -->
+<header class="sendy-header">
+  <div class="logo-area">
+    <i class="fas fa-tv-retro logo-icon"></i>
+    <div class="logo-text">Sendy<span>TV</span></div>
+  </div>
+  <a href="index.html" class="dashboard-link">
+    <i class="fas fa-arrow-left"></i> Back
+  </a>
+</header>
+
+<!-- Search header -->
+<div class="search-header">
   <div class="search-wrapper">
     <div class="search-box">
       <i class="fas fa-search"></i>
       <input type="text" id="search" placeholder="Cari channel atau kategori...">
     </div>
   </div>
-</header>
-
-<!-- Kategori Rekomendasi -->
-<div class="category-tabs">
-  <button class="category-btn active" onclick="filterCategory('semua')"><i class="fas fa-tv"></i> Semua Channel</button>
-  <button class="category-btn" onclick="filterCategory('indonesia')"><i class="fas fa-flag"></i> Indonesia</button>
-  <button class="category-btn" onclick="filterCategory('rekomendasi')"><i class="fas fa-star"></i> Rekomendasi</button>
 </div>
 
+<!-- Category tabs -->
+<div class="category-tabs">
+  <button class="category-btn active" onclick="filterCategory('semua')"><i class="fas fa-tv"></i> Semua</button>
+  <button class="category-btn" onclick="filterCategory('indonesia')"><i class="fas fa-flag"></i> Indonesia</button>
+</div>
+
+<!-- Player section -->
 <div class="player-section">
   <div id="player">
     <video id="video" controls playsinline></video>
@@ -321,9 +539,21 @@
   </div>
 </div>
 
+<!-- Favorite section (channel yang disematkan) -->
+<div class="favorite-section">
+  <div class="favorite-header">
+    <i class="fas fa-star"></i>
+    <h3>Channel Favorite<span id="favorite-count">0</span></h3>
+    <i class="fas fa-thumbtack" style="color: #fbbf24; margin-left: auto;"></i>
+  </div>
+  <div id="favorite-channels">
+    <!-- Akan diisi JavaScript -->
+  </div>
+</div>
+
+<!-- Channels container -->
 <div class="channels-container">
   <div id="channels">
-    <!-- akan diisi javascript -->
     <div class="loading-state">
       <i class="fas fa-spinner fa-pulse" style="margin-right: 8px;"></i> Memuat daftar channel...
     </div>
@@ -335,17 +565,23 @@
 
   let channels = [];
   let filtered = [];
-  let activeFilter = 'semua'; // untuk tracking filter aktif
+  let activeFilter = 'semua';
+  
+  // Load favorites from localStorage
+  let favorites = JSON.parse(localStorage.getItem('sendytv_favorites')) || [];
 
   const channelsEl = document.getElementById("channels");
   const searchEl = document.getElementById("search");
   const video = document.getElementById("video");
   const channelCountSpan = document.getElementById("channel-count");
   const categoryBtns = document.querySelectorAll('.category-btn');
+  const favoriteSection = document.getElementById('favorite-channels');
+  const favoriteCountSpan = document.getElementById('favorite-count');
 
-  // Daftar channel Indonesia yang akan direkomendasikan (sebagai fallback jika tidak ada di playlist)
+  // Daftar channel Indonesia dengan URL yang sudah diperbarui
   const indonesianChannels = [
-    { name: 'RTV', logo: 'https://www.rtv.co.id/logo.png', group: 'Indonesia', url: 'https://cdn-tvkly.rtv.co.id/web/hls/live/2036082/rtv/playlist.m3u8' },
+    { name: 'RCTI', logo: 'https://upload.wikimedia.org/wikipedia/id/6/6c/RCTI.png', group: 'Indonesia', url: 'https://rcti.mncnow.id/live/eds/RCTI/sa_hls/RCTI-02.m3u8' },
+    { name: 'RTV', logo: 'https://www.rtv.co.id/logo.png', group: 'Indonesia', url: 'https://rtv.mncnow.id/live/eds/RTV/sa_hls/RTV-02.m3u8' },
     { name: 'GTV', logo: 'https://www.gtv.com/logo.png', group: 'Indonesia', url: 'https://gtv.mncnow.id/live/eds/GTV/sa_hls/GTV-02.m3u8' },
     { name: 'ANTV', logo: 'https://www.antv.com/logo.png', group: 'Indonesia', url: 'https://antv.mncnow.id/live/eds/ANTV/sa_hls/ANTV-02.m3u8' },
     { name: 'TRANS7', logo: 'https://www.trans7.com/logo.png', group: 'Indonesia', url: 'https://trans7.mncnow.id/live/eds/Trans7/sa_hls/Trans7-02.m3u8' },
@@ -357,17 +593,77 @@
     { name: 'TVRI', logo: 'https://www.tvri.go.id/logo.png', group: 'Indonesia', url: 'https://tvri.mncnow.id/live/eds/TVRI/sa_hls/TVRI-02.m3u8' }
   ];
 
+  // Save favorites to localStorage
+  function saveFavorites() {
+    localStorage.setItem('sendytv_favorites', JSON.stringify(favorites));
+    renderFavorites();
+    render(); // Refresh tombol favorit di channel list
+  }
+
+  // Toggle favorite
+  function toggleFavorite(channel) {
+    const index = favorites.findIndex(fav => fav.url === channel.url);
+    if (index === -1) {
+      favorites.push(channel);
+    } else {
+      favorites.splice(index, 1);
+    }
+    saveFavorites();
+  }
+
+  // Check if channel is favorite
+  function isFavorite(channel) {
+    return favorites.some(fav => fav.url === channel.url);
+  }
+
+  // Render favorites section
+  function renderFavorites() {
+    if (!favoriteSection) return;
+    
+    if (favorites.length === 0) {
+      favoriteSection.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:20px; color:#8fa4d0; background:#1a2740; border-radius:40px;">
+        <i class="far fa-star" style="font-size:2rem; margin-bottom:10px;"></i><br>Belum ada channel favorit.
+      </div>`;
+      favoriteCountSpan.innerText = '0';
+      return;
+    }
+
+    let html = '';
+    favorites.forEach(ch => {
+      const logoUrl = ch.logo || `https://placehold.co/60x60/1e2b44/white?text=${ch.name.charAt(0)}`;
+      html += `
+        <div class="favorite-card" onclick="play('${ch.url}')">
+          <img src="${logoUrl}" onerror="this.src='https://placehold.co/60x60/1e2b44/white?text=${ch.name.charAt(0)}';">
+          <div class="favorite-info">
+            <div class="favorite-name">${ch.name}</div>
+            <div class="favorite-group">${ch.group || 'Umum'}</div>
+          </div>
+          <div class="remove-fav" onclick="event.stopPropagation(); removeFavorite('${ch.url}')">
+            <i class="fas fa-times"></i>
+          </div>
+        </div>
+      `;
+    });
+    favoriteSection.innerHTML = html;
+    favoriteCountSpan.innerText = favorites.length;
+  }
+
+  // Remove from favorites
+  window.removeFavorite = function(url) {
+    favorites = favorites.filter(fav => fav.url !== url);
+    saveFavorites();
+  };
+
+  // Parse M3U playlist
   function parseM3U(text) {
     const lines = text.split("\n");
     let currentChannel = null;
-
-    channels = []; // reset
+    channels = [];
 
     lines.forEach(line => {
       line = line.trim();
 
       if (line.startsWith("#EXTINF")) {
-        // ambil name setelah koma terakhir
         let name = line.split(",").pop() || "Untitled";
         let logo = (line.match(/tvg-logo="(.*?)"/) || [])[1];
         let group = (line.match(/group-title="(.*?)"/) || [])[1] || "Lainnya";
@@ -378,26 +674,26 @@
           group: group,
         };
       } else if (line && !line.startsWith("#") && currentChannel) {
-        // ini adalah URL
         currentChannel.url = line;
         channels.push(currentChannel);
         currentChannel = null;
       }
     });
 
-    // Tambahkan channel Indonesia jika belum ada di playlist
+    // Add Indonesian channels
     addIndonesianChannels();
 
     filtered = [...channels];
     applyFilter(activeFilter);
+    renderFavorites();
   }
 
+  // Add Indonesian channels if not exists
   function addIndonesianChannels() {
-    // Cek apakah channel Indonesia sudah ada, jika belum tambahkan
     indonesianChannels.forEach(indoChan => {
       const exists = channels.some(ch => 
         ch.name.toLowerCase().includes(indoChan.name.toLowerCase()) || 
-        (ch.url && ch.url.includes(indoChan.url.split('/')[2]))
+        (ch.url && ch.url.includes(indoChan.url?.split('/')[2] || ''))
       );
       
       if (!exists) {
@@ -406,18 +702,17 @@
     });
   }
 
+  // Filter category
   function filterCategory(category) {
     activeFilter = category;
     
-    // Update active class pada button
     categoryBtns.forEach(btn => {
       btn.classList.remove('active');
       if (btn.textContent.toLowerCase().includes(category) || 
           (category === 'semua' && btn.textContent.includes('Semua')) ||
           (category === 'indonesia' && btn.textContent.includes('Indonesia')) ||
           (category === 'rekomendasi' && btn.textContent.includes('Rekomendasi')) ||
-          (category === 'berita' && btn.textContent.includes('Berita')) ||
-          (category === 'olahraga' && btn.textContent.includes('Olahraga'))) {
+          (category === 'favorit' && btn.textContent.includes('Favorit'))) {
         btn.classList.add('active');
       }
     });
@@ -425,6 +720,7 @@
     applyFilter(category);
   }
 
+  // Apply filter
   function applyFilter(category) {
     if (category === 'semua') {
       filtered = [...channels];
@@ -435,49 +731,30 @@
         indonesianChannels.some(ic => ic.name.toLowerCase() === ch.name.toLowerCase())
       );
       
-      // Jika tidak ada, tampilkan channel Indonesia dari daftar
       if (filtered.length === 0) {
         filtered = indonesianChannels;
       }
     } else if (category === 'rekomendasi') {
-      // Rekomendasi: 6 channel Indonesia utama + beberapa internasional populer
-      const rekomendasiNama = ['RTV', 'GTV', 'ANTV', 'TRANS7', 'MNCTV', 'INDOSIAR', 'CNN', 'BBC', 'FOX', 'METRO TV'];
+      const rekomendasiNama = ['RCTI', 'RTV', 'GTV', 'ANTV', 'TRANS7', 'MNCTV', 'INDOSIAR', 'CNN', 'BBC', 'METRO TV'];
       filtered = channels.filter(ch => 
         rekomendasiNama.some(nama => ch.name.toLowerCase().includes(nama.toLowerCase()))
       );
       
       if (filtered.length < 6) {
-        // Tambahkan dari indonesianChannels jika perlu
         filtered = [...filtered, ...indonesianChannels.slice(0, 6)];
       }
-    } else if (category === 'berita') {
-      filtered = channels.filter(ch => 
-        ch.group?.toLowerCase().includes('berita') || 
-        ch.group?.toLowerCase().includes('news') ||
-        ch.name?.toLowerCase().includes('news') ||
-        ch.name?.toLowerCase().includes('metro') ||
-        ch.name?.toLowerCase().includes('kompas') ||
-        ch.name?.toLowerCase().includes('cnn') ||
-        ch.name?.toLowerCase().includes('bbc')
-      );
-    } else if (category === 'olahraga') {
-      filtered = channels.filter(ch => 
-        ch.group?.toLowerCase().includes('olahraga') || 
-        ch.group?.toLowerCase().includes('sport') ||
-        ch.name?.toLowerCase().includes('sport') ||
-        ch.name?.toLowerCase().includes('football') ||
-        ch.name?.toLowerCase().includes('bola')
-      );
+    } else if (category === 'favorit') {
+      filtered = favorites.length > 0 ? [...favorites] : [];
     }
 
-    // Jika masih kosong, gunakan semua channel
-    if (filtered.length === 0) {
+    if (filtered.length === 0 && category !== 'favorit') {
       filtered = [...channels];
     }
 
     render();
   }
 
+  // Render channel list
   function render() {
     if (!channelsEl) return;
 
@@ -488,14 +765,23 @@
     }
 
     let html = '';
-    filtered.slice(0, 50).forEach(ch => { // batasi 50 channel agar tidak terlalu banyak
+    filtered.slice(0, 50).forEach(ch => {
       const logoUrl = ch.logo || `https://placehold.co/60x60/1e2b44/white?text=${ch.name.charAt(0)}`;
+      const favClass = isFavorite(ch) ? 'active' : '';
+      
+      // Escape channel object for onclick
+      const channelStr = JSON.stringify(ch).replace(/"/g, '&quot;');
+      
       html += `
-        <div class="channel-card" data-url="${ch.url}">
+        <div class="channel-card">
+          <button class="favorite-btn ${favClass}" onclick="event.stopPropagation(); toggleFavorite(${channelStr})">
+            <i class="fa${isFavorite(ch) ? 's' : 'r'} fa-star"></i>
+          </button>
           <img class="channel-logo" src="${logoUrl}" 
                alt="${ch.name}" loading="lazy" 
-               onerror="this.src='https://placehold.co/60x60/1e2b44/white?text=${ch.name.charAt(0)}';">
-          <div class="channel-info">
+               onerror="this.src='https://placehold.co/60x60/1e2b44/white?text=${ch.name.charAt(0)}';"
+               onclick="play('${ch.url}')">
+          <div class="channel-info" onclick="play('${ch.url}')">
             <div class="channel-name">${ch.name}</div>
             <div class="channel-group"><i class="fa-regular fa-folder" style="margin-right: 4px;"></i>${ch.group || 'Umum'}</div>
           </div>
@@ -505,18 +791,10 @@
 
     channelsEl.innerHTML = html;
     channelCountSpan.innerText = filtered.length;
-
-    // tambahkan event listener ke masing-masing card
-    document.querySelectorAll('.channel-card').forEach(card => {
-      card.addEventListener('click', (e) => {
-        const url = card.dataset.url;
-        if (url) play(url);
-      });
-    });
   }
 
-  function play(url) {
-    // reset src
+  // Play function
+  window.play = function(url) {
     video.pause();
     video.removeAttribute('src');
     video.load();
@@ -533,7 +811,6 @@
         video.play().catch(e => console.log('autoplay blocked', e));
       });
     } else if (video.canPlayType('application/vnd.apple.mpegurl') || !url.includes('.m3u8')) {
-      // untuk Safari / file biasa
       video.src = url;
       video.addEventListener('loadedmetadata', () => {
         video.play().catch(e => console.log('autoplay prevented', e));
@@ -542,9 +819,9 @@
       video.src = url;
       video.play().catch(e => console.log('fallback play error', e));
     }
-  }
+  };
 
-  // Search dengan debounce sederhana
+  // Search with debounce
   let searchTimeout;
   searchEl.addEventListener('input', () => {
     clearTimeout(searchTimeout);
@@ -572,15 +849,15 @@
     .then(parseM3U)
     .catch(err => {
       console.error(err);
-      // Jika gagal fetch, tetap tampilkan channel Indonesia
       channels = [...indonesianChannels];
       filtered = [...channels];
       render();
-      channelsEl.innerHTML = `<div class="no-result"><i class="fa-solid fa-info-circle"></i> Menggunakan channel rekomendasi lokal</div>`;
+      renderFavorites();
     });
 
-  // Fungsi global untuk filter (dipanggil dari button)
+  // Global functions
   window.filterCategory = filterCategory;
+  window.toggleFavorite = toggleFavorite;
 </script>
 
 </body>
